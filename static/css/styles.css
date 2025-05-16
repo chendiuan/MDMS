@@ -78,6 +78,7 @@ body {
   box-shadow: var(--shadow);
   scrollbar-width: none;
   -ms-overflow-style: none;
+  transition: transform 0.3s ease-in-out;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -104,12 +105,13 @@ body {
   border-radius: 2px;
 }
 
-.search-container {
+/* Search container */
+#sidebar .relative {
   position: relative;
   margin-bottom: 20px;
 }
 
-.search-container input {
+#sidebar input {
   width: 100%;
   padding: 10px 30px 10px 15px;
   border: 1px solid var(--border-color);
@@ -120,111 +122,62 @@ body {
   transition: all 0.3s ease;
 }
 
-.search-container input:focus {
+#sidebar input:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 6px var(--link-bg);
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
 }
 
-.search-container i {
+#sidebarSearchClear {
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-color);
   opacity: 0.7;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.nav-list {
-  list-style: none;
-}
-
-.nav-list > li {
-  margin-bottom: 10px;
-}
-
-.nav-list a {
-  color: var(--link-color);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-}
-
-.nav-list a:hover {
-  color: var(--link-hover);
-  background: var(--link-active-bg);
-  transform: translateX(5px);
-}
-
-.nav-list a i {
-  margin-right: 10px;
-  font-size: 1rem;
-}
-
-.submenu {
-  list-style: none;
-  padding-left: 30px;
-  margin-top: 5px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-  opacity: 0;
-}
-
-.parent-item.active > .submenu {
-  max-height: 500px;
-  opacity: 1;
-}
-
-.submenu a {
-  font-size: 0.9rem;
-  padding: 8px 15px;
-  color: var(--link-color);
-  transition: all 0.3s ease;
-}
-
-.submenu a:hover {
-  color: var(--link-hover);
-  background: var(--link-active-bg);
-  transform: translateX(5px);
-}
-
-.toggle-submenu::after {
-  content: '\f078';
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  position: absolute;
-  right: 15px;
-  font-size: 0.8rem;
-  transition: transform 0.3s ease;
-}
-
-.parent-item.active .toggle-submenu::after {
-  transform: rotate(180deg);
+#sidebarSearchClear:hover {
+  color: #9ca3af;
 }
 
 /* Main content */
 .main-content {
   flex: 1;
   margin-left: 250px;
-  padding: 20px;
+  padding: 30px;
   background: var(--tab-active-bg);
   min-height: 100vh;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
 }
 
 .main-header {
   padding: 20px 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 30px;
 }
 
 .main-header h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 600;
   color: var(--text-color);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.main-header h1::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-underline);
+  bottom: -8px;
+  left: 0;
+  border-radius: 2px;
 }
 
 .main-header .controls {
@@ -234,91 +187,75 @@ body {
   align-items: center;
 }
 
-.time-display {
-  font-size: 0.9rem;
-  color: var(--text-color);
-}
-
 .theme-toggle {
-  padding: 8px;
+  padding: 10px 14px;
   border: 1px solid var(--border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--tab-bg);
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .theme-toggle:hover {
-  background: var(--table-hover-bg);
+  background: var(--tab-active-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Tabs */
 .tabs {
   display: flex;
   border-bottom: 2px solid var(--border-color);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .tab {
-  padding: 12px 24px;
+  padding: 14px 28px;
   background: var(--tab-bg);
   border: none;
-  border-radius: 6px 6px 0 0;
-  margin-right: 8px;
-  font-size: 1rem;
+  border-radius: 8px 8px 0 0;
+  margin-right: 10px;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .tab:hover {
-  background: var(--table-hover-bg);
+  background: var(--tab-active-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tab.active {
   background: var(--tab-active-bg);
   color: var(--accent-color);
-  border-bottom: 2px solid var(--accent-color);
+  border-bottom: 3px solid var(--accent-color);
 }
 
 .tab-content {
-  padding: 20px;
+  padding: 25px;
   background: var(--tab-active-bg);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: none;
+  border: 1px solid var(--border-color);
 }
 
 .tab-content.active {
   display: block;
 }
 
-/* Skeleton */
-.skeleton {
-  background: linear-gradient(90deg, var(--border-color) 25%, var(--tab-bg) 50%, var(--border-color) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 4px;
-  height: 20px;
-  margin: 10px 0;
-}
-
-.footer {
-  text-align: center;
-  padding: 20px 0;
-  color: var(--text-color);
-  font-size: 0.85rem;
-  border-top: 1px solid var(--border-color);
-  margin-top: 30px;
-}
-
+/* Back to top */
 .back-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  padding: 12px;
+  padding: 12px 16px;
   background: var(--accent-color);
   color: #fff;
   border-radius: 50%;
@@ -339,31 +276,36 @@ body {
   transform: translateY(-3px);
 }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
 @media (max-width: 768px) {
   .sidebar {
-    width: 200px;
-    transform: translateX(-200px);
+      width: 200px;
+      transform: translateX(-200px);
   }
 
   .sidebar.active {
-    transform: translateX(0);
+      transform: translateX(0);
   }
 
   .main-content {
-    margin-left: 0;
+      margin-left: 0;
+      padding: 20px;
+      border-radius: 8px;
   }
 
   .main-header h1 {
-    font-size: 1.5rem;
+      font-size: 1.5rem;
+  }
+
+  .main-header h1::after {
+      width: 40px;
   }
 
   .tab {
-    padding: 8px 15px;
-    font-size: 0.9rem;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+  }
+
+  .tab-content {
+      padding: 15px;
   }
 }

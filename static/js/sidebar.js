@@ -6,7 +6,7 @@ async function loadProjectList() {
 
     try {
         // Fetch project folder names (use API or static file)
-        const response = await fetch('/api/projects'); // Or '/data/projects.json'
+        const response = await fetch('/data/projects.json'); // Or '/data/projects.json'
         if (!response.ok) throw new Error('Failed to load project list');
         const projects = await response.json();
 
