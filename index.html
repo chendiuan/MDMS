@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Validation Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/commons.css">
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <link rel="stylesheet" href="/static/css/homepage.css">
+</head>
+<body class="bg-gray-100 font-inter flex">
+    <!-- Sidebar Toggle Button (for mobile) -->
+    <button id="sidebarToggle" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-blue-900 text-white h-screen p-6 fixed transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+        <h2 class="text-2xl font-bold mb-6">Projects</h2>
+        <!-- Project Search -->
+        <div class="relative mb-6">
+            <input type="text" id="projectSearch" placeholder="Search projects..." class="w-full p-2 pr-8 rounded bg-blue-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="projectSearchClear" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white hidden">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <ul id="projectList"></ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 md:ml-64 transition-all duration-300">
+        <!-- Navigation Bar -->
+        <nav class="bg-blue-600 p-4 shadow-md">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-white text-2xl font-bold">Electrical Validation Dashboard</h1>
+                <div>
+                    <a href="#" class="text-white hover:text-gray-200 mx-2">Home</a>
+                    <a href="#" class="text-white hover:text-gray-200 mx-2">Archive</a>
+                    <a href="#" class="text-white hover:text-gray-200 mx-2">About</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <div class="container mx-auto p-6">
+            <!-- Summary Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <h2 class="text-xl font-semibold mb-4">Daily Test Results Summary</h2>
+                <p class="text-gray-600">Last updated: <span id="last-updated">2025-04-27</span></p>
+                <p class="text-gray-600">Current Project: <span id="current-project">None</span></p>
+                <div class="mt-4">
+                    <canvas id="resultsChart" class="w-full h-64"></canvas>
+                </div>
+            </section>
+
+            <!-- Tablist Section -->
+            <section class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Test Results Details</h2>
+                <!-- Tabs -->
+                <div class="border-b border-gray-200">
+                    <nav id="tab-nav" class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button class="tab-button border-b-2 border-blue-600 text-blue-600 px-1 py-2 font-medium text-sm" data-tab="overview">Overview</button>
+                        <button class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 px-1 py-2 font-medium text-sm" data-tab="metrics">Detailed Metrics</button>
+                        <button class="tab-button border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 px-1 py-2 font-medium text-sm" data-tab="errors">Error Logs</button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content mt-4">
+                    <!-- Overview Tab -->
+                    <div id="overview" class="tab-pane">
+                        <div class="relative mb-4">
+                            <input type="text" id="overviewSearch" placeholder="Search table..." class="w-full p-2 pr-8 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button id="overviewSearchClear" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-700 hidden">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto max-h-96">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="sticky top-0 bg-gray-100">
+                                    <tr>
+                                        <th class="p-3 font-semibold">Test ID</th>
+                                        <th class="p-3 font-semibold">Date</th>
+                                        <th class="p-3 font-semibold">Metric</th>
+                                        <th class="p-3 font-semibold">Value</th>
+                                        <th class="p-3 font-semibold">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="overviewTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Metrics Tab -->
+                    <div id="metrics" class="tab-pane hidden">
+                        <div class="relative mb-4">
+                            <input type="text" id="metricsSearch" placeholder="Search table..." class="w-full p-2 pr-8 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button id="metricsSearchClear" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-700 hidden">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto max-h-96">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="sticky top-0 bg-gray-100">
+                                    <tr>
+                                        <th class="p-3 font-semibold">Test ID</th>
+                                        <th class="p-3 font-semibold">Date</th>
+                                        <th class="p-3 font-semibold">Metric Type</th>
+                                        <th class="p-3 font-semibold">Value</th>
+                                        <th class="p-3 font-semibold">Threshold</th>
+                                        <th class="p-3 font-semibold">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metricsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Error Logs Tab -->
+                    <div id="errors" class="tab-pane hidden">
+                        <div class="relative mb-4">
+                            <input type="text" id="errorsSearch" placeholder="Search table..." class="w-full p-2 pr-8 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button id="errorsSearchClear" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-700 hidden">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto max-h-96">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="sticky top-0 bg-gray-100">
+                                    <tr>
+                                        <th class="p-3 font-semibold">Test ID</th>
+                                        <th class="p-3 font-semibold">Date</th>
+                                        <th class="p-3 font-semibold">Error Code</th>
+                                        <th class="p-3 font-semibold">Description</th>
+                                        <th class="p-3 font-semibold">Severity</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="errorsTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="errorMessage" class="hidden fixed bottom-4 right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg">
+        Failed to load project data. Please try again later.
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/homepage.js"></script>
+</body>
+</html>

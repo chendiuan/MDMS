@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EV Margin Test Report</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/configuration.css" />
+</head>
+<body>
+  <nav class="sidebar" aria-label="Main navigation">
+    <h2><span style="color: var(--accent-color);">EV</span> Hub</h2>
+    <div class="search-container">
+      <input type="text" id="sidebarSearch" placeholder="Search projects..." aria-label="Search projects" />
+      <i class="fas fa-search"></i>
+    </div>
+    <ul class="nav-list">
+      <li><a href="#" id="home-link"><i class="fas fa-home"></i>Home</a></li>
+      <li class="parent-item">
+        <a href="#" class="toggle-submenu" aria-expanded="false"><i class="fas fa-microchip"></i>AMD</a>
+        <ul class="submenu">
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Kahoolawe">Kahoolawe</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Kauai">Kauai</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Maui">Maui</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Monaco">Monaco</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Oahu">Oahu</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Portofino">Portofino</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Talladega">Talladega</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Hilo">Hilo</a></li>
+          <li><a href="#" class="project-link" data-brand="AMD" data-project="Mosport">Mosport</a></li>
+        </ul>
+      </li>
+      <li class="parent-item">
+        <a href="#" class="toggle-submenu" aria-expanded="false"><i class="fas fa-microchip"></i>Intel</a>
+        <ul class="submenu">
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Perth">Perth</a></li>
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Hydra">Hydra</a></li>
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Santorini">Santorini</a></li>
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Monza">Monza</a></li>
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Marina Bay">Marina Bay</a></li>
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Andros">Andros</a></li>
+          <li><a href="#" class="project-link" data-brand="Intel" data-project="Sifnos">Sifnos</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="main-header">
+      <h1 id="project-title">Dashboard</h1>
+      <div class="controls">
+        <span class="time-display" id="currentTime"></span>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" id="tab-summary" role="tab" aria-selected="true" aria-controls="summary">Summary</button>
+      <button class="tab" id="tab-configuration" role="tab" aria-selected="false" aria-controls="configuration">Configuration</button>
+    </div>
+
+    <section id="summary" class="tab-content active" role="tabpanel" aria-labelledby="tab-summary">
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+      <div class="skeleton"></div>
+    </section>
+    <section id="configuration" class="tab-content" role="tabpanel" aria-labelledby="tab-configuration"></section>
+
+    <footer class="footer">
+      <p>© 2025 Lenovo Electrical Validation. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script src="../scripts/script.js"></script>
+  <script src="../scripts/configuration.js"></script>
+</body>
+</html>

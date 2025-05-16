@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>測試結果總覽</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #ecf0f1;
+            overflow-y: auto;
+        }
+        .tablist {
+            display: flex;
+            background-color: #bdc3c7;
+            padding: 10px;
+        }
+        .tablist button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            padding: 14px 20px;
+            cursor: pointer;
+            font-size: 17px;
+        }
+        .tablist button:hover {
+            background-color: #ddd;
+        }
+        .tablist button.active {
+            background-color: white;
+            border-bottom: 2px solid #2980b9;
+        }
+        .tabcontent {
+            display: none;
+            padding: 20px;
+        }
+        .tabcontent.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #bbb;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #ddd;
+        }
+        .table-search {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>專案列表</h2>
+    <input type="text" id="project-search" placeholder="搜尋 Project...">
+    <ul id="project-list">
+        <!-- JS動態生成 -->
+    </ul>
+</div>
+
+<div class="main-content">
+    <div class="tablist" id="tablist">
+        <!-- JS動態生成 -->
+    </div>
+    <div id="tab-content">
+        <!-- JS動態生成 -->
+    </div>
+</div>
+
+<script>
+const projects = ["ProjectA", "ProjectB", "ProjectC"]; // 你的 Project 名單
+
+// 生成 Project List
+const projectList = document.getElementById('project-list');
+projects.forEach(project => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.textContent = project;
+    a.href = "#";
+    a.onclick = () => loadProject(project);
+    li.appendChild(a);
+    projectList.appendChild(li);
+});
+
+// Project 搜尋功能
+document.getElementById('project-search').addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+    const links = projectList.getElementsByTagName('a');
+    for (let i = 0; i < links.length; i++) {
+        const txt = links[i].textContent.toLowerCase();
+        links[i].parentElement.style.display = txt.includes(filter) ? "" : "none";
+    }
+});
+
+// 載入 Project
+function loadProject(projectName) {
+    fetch(`data/${projectName}.json`)
+    .then(response => response.json())
+    .then(data => {
+        renderTabs(Object.keys(data));
+        renderTabContent(data);
+    });
+}
+
+// 產生 Tabs
+function renderTabs(tabNames) {
+    const tablist = document.getElementById('tablist');
+    tablist.innerHTML = '';
+    tabNames.forEach((tabName, index) => {
+        const button = document.createElement('button');
+        button.className = 'tablink' + (index === 0 ? ' active' : '');
+        button.textContent = tabName;
+        button.onclick = (e) => switchTab(e, tabName);
+        tablist.appendChild(button);
+    });
+}
+
+// 產生 Tab內容 + Table資料 + 搜尋框
+function renderTabContent(data) {
+    const contentDiv = document.getElementById('tab-content');
+    contentDiv.innerHTML = '';
+    for (const [tabName, rows] of Object.entries(data)) {
+        const div = document.createElement('div');
+        div.className = 'tabcontent' + (tabName === Object.keys(data)[0] ? ' active' : '');
+        div.id = tabName;
+
+        // 每個Table上方加搜尋框
+        const input = document.createElement('input');
+        input.className = 'table-search';
+        input.placeholder = "搜尋表格內容...";
+        input.oninput = function() {
+            filterTableRows(this, table);
+        };
+        div.appendChild(input);
+
+        const table = document.createElement('table');
+        if (rows.length > 0) {
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            Object.keys(rows[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            rows.forEach(row => {
+                const tr = document.createElement('tr');
+                Object.values(row).forEach(val => {
+                    const td = document.createElement('td');
+                    td.innerHTML = val;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+        } else {
+            table.innerHTML = "<tr><td>無資料</td></tr>";
+        }
+
+        div.appendChild(table);
+        contentDiv.appendChild(div);
+    }
+}
+
+// 切換 Tab
+function switchTab(evt, tabName) {
+    document.querySelectorAll('.tabcontent').forEach(div => {
+        div.classList.remove('active');
+    });
+    document.getElementById(tabName).classList.add('active');
+
+    document.querySelectorAll('.tablink').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    evt.currentTarget.classList.add('active');
+}
+
+// 表格搜尋功能
+function filterTableRows(input, table) {
+    const filter = input.value.toLowerCase();
+    const trs = table.getElementsByTagName('tr');
+    for (let i = 1; i < trs.length; i++) { // 跳過 header
+        const tds = trs[i].getElementsByTagName('td');
+        let show = false;
+        for (let j = 0; j < tds.length; j++) {
+            if (tds[j].textContent.toLowerCase().includes(filter)) {
+                show = true;
+                break;
+            }
+        }
+        trs[i].style.display = show ? "" : "none";
+    }
+}
+</script>
+
+</body>
+</html>

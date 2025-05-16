@@ -1,0 +1,19 @@
+[
+    { "name": "Hilo" ,"vendor": "AMD"},
+    { "name": "Kahoolawe" ,"vendor": "AMD"},
+    { "name": "Kauai" ,"vendor": "AMD"},
+    { "name": "Maui" ,"vendor": "AMD"},
+    { "name": "Monaco" ,"vendor": "AMD"},
+    { "name": "Mosport" ,"vendor": "AMD"},
+    { "name": "Oahu" ,"vendor": "AMD"},
+    { "name": "Portofino" ,"vendor": "AMD"},
+    { "name": "Talladega" ,"vendor": "AMD"},
+    { "name": "Andros" ,"vendor": "Intel"},
+    { "name": "Hydra" ,"vendor": "Intel"},
+    { "name": "Marina Bay" ,"vendor": "Intel"},
+    { "name": "Monza" ,"vendor": "Intel"},
+    { "name": "Perth" ,"vendor": "Intel"},
+    { "name": "Santorini" ,"vendor": "Intel"},
+    { "name": "Sifnos" ,"vendor": "Intel"},
+    { "name": "Tasmania" ,"vendor": "NVIDIA"}
+]

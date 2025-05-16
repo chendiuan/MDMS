@@ -1,0 +1,399 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>MemEye Analysis Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f8ff;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 40px auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+            h1 {
+                text-align: center;
+                font-size: 32px;
+                font-weight: bold;
+            }
+            h2 {
+                text-align: center;
+                font-size: 24px;
+                font-weight: bold;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            th, td {
+                border: 1px solid #dddddd;
+                padding: 15px;
+                text-align: center;
+            }
+            th {
+                background-color: #f0f0f0;
+                font-weight: bold;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            .title-header {
+                font-size: 20px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>MemEye Analysis Report</h1>
+            <table>
+                <tr>
+                    <th colspan="5" class="title-header">Details</th>
+                </tr>
+                <tr>
+                    <th>BIOS</th>
+                    <th>Frequency</th>
+                    <th>DIMM Type</th>
+                    <th>Manufacturer</th>
+                    <th>Size</th>
+                </tr>
+    
+                <tr>
+                    <td>KAE135A-5.50</td>
+                    <td>6400</td>
+                    <td>DDR5</td>
+                    <td>Samsung</td>
+                    <td>32 GB</td>
+                    </tr>
+                
+            </table>
+            <table>
+                <tr>
+                    <th colspan="7" class="title-header">Data Information</th>
+                </tr>
+                <tr>
+                    <th>Test Type</th>
+                    <th>Min Verf Offset (mV)</th>
+                    <th>Max Verf Offset (mV)</th>
+                    <th>Total Verf (mV)</th>
+                    <th>Min Delay (UI)</th>
+                    <th>Max Delay (UI)</th>
+                    <th>Total Delay (UI)</th>
+                </tr>
+    
+                <tr>
+                    <td rowspan='3'>Cross Read</td>
+                    <td>-22.94</td>
+                    <td>33.35</td>
+                    <td>56.29</td>
+                    <td>-5.0</td>
+                    <td>10.0</td>
+                    <td>15.0</td>
+                </tr>
+            
+                <tr>
+                    <td>-22.94</td>
+                    <td>33.35</td>
+                    <td>56.29</td>
+                    <td>-5.0</td>
+                    <td>10.0</td>
+                    <td>15.0</td>
+                </tr>
+            
+                <tr>
+                    <td>-22.94</td>
+                    <td>33.35</td>
+                    <td>56.29</td>
+                    <td>-6.0</td>
+                    <td>10.0</td>
+                    <td>16.0</td>
+                </tr>
+            
+                <tr>
+                    <td rowspan='3'>Cross Write</td>
+                    <td>-44.0</td>
+                    <td>33.0</td>
+                    <td>77.0</td>
+                    <td>-8.0</td>
+                    <td>9.0</td>
+                    <td>17.0</td>
+                </tr>
+            
+                <tr>
+                    <td>-49.5</td>
+                    <td>33.0</td>
+                    <td>82.5</td>
+                    <td>-8.0</td>
+                    <td>10.0</td>
+                    <td>18.0</td>
+                </tr>
+            
+                <tr>
+                    <td>-44.0</td>
+                    <td>33.0</td>
+                    <td>77.0</td>
+                    <td>-8.0</td>
+                    <td>10.0</td>
+                    <td>18.0</td>
+                </tr>
+            
+                <tr>
+                    <td rowspan='2'>Cross CA Fast</td>
+                    <td>-88.0</td>
+                    <td>93.5</td>
+                    <td>181.5</td>
+                    <td>-15.0</td>
+                    <td>15.0</td>
+                    <td>30.0</td>
+                </tr>
+            
+                <tr>
+                    <td>-66.0</td>
+                    <td>99.0</td>
+                    <td>165.0</td>
+                    <td>-15.0</td>
+                    <td>13.0</td>
+                    <td>28.0</td>
+                </tr>
+            
+                <tr>
+                    <td rowspan='2'>Cross CS Fast</td>
+                    <td>-99.0</td>
+                    <td>99.0</td>
+                    <td>198.0</td>
+                    <td>-15.0</td>
+                    <td>15.0</td>
+                    <td>30.0</td>
+                </tr>
+            
+                <tr>
+                    <td>-99.0</td>
+                    <td>99.0</td>
+                    <td>198.0</td>
+                    <td>-15.0</td>
+                    <td>15.0</td>
+                    <td>30.0</td>
+                </tr>
+            
+            </table>
+            <table>
+                <tr>
+                    <th colspan="5" class="title-header">AMD Criteria</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Cross Read</th>
+                    <th>Cross Write</th>
+                    <th>Cross CA Fast</th>
+                    <th>Cross CS Fast</th>
+                </tr>
+                <tr>
+                    <td>Verf (mV)</td>
+                    <td>20.8</td>
+                    <td>27.5</td>
+                    <td>55.0</td>
+                    <td>55.0</td>
+                </tr>
+                <tr>
+                    <td>Delay (UI)</td>
+                    <td>6</td>
+                    <td>5</td>
+                    <td>8</td>
+                    <td>8</td>
+                </tr>
+    
+            </table>
+            <table>
+                <tr>
+                    <th colspan="4" class="title-header">Memory Device</th>
+                </tr>
+                <tr>
+                    <th>Locator</th>
+                    <th>MemoryInfo</th>
+                    <th>Part Number</th>
+                    <th>Serial Number</th>
+                </tr>
+    
+                <tr>
+                    <td>DIMM 7</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPKC</td>
+                    <td>80CE0124150621C4E5</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 8</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPEC</td>
+                    <td>80CE0124150622395C</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 9</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPPC</td>
+                    <td>80CE01241206103BD8</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 10</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPWC</td>
+                    <td>80CE012418063896EE</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 11</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPKC</td>
+                    <td>80CE0124150621C6AC</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 12</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPEC</td>
+                    <td>80CE012415062238DE</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 6</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPWC</td>
+                    <td>80CE01241806389656</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 5</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPPC</td>
+                    <td>80CE01241206103C20</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 4</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPEC</td>
+                    <td>80CE0124150622367B</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 3</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPKC</td>
+                    <td>80CE0124150621C47F</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 2</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPWC</td>
+                    <td>80CE0124180638969B</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 1</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPPC</td>
+                    <td>80CE01241206103B12</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 19</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPKC</td>
+                    <td>80CE0124150621C7BA</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 20</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPEC</td>
+                    <td>80CE01241506222FAB</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 21</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPPC</td>
+                    <td>80CE01241206103C31</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 22</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPWC</td>
+                    <td>80CE01241506218393</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 23</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPKC</td>
+                    <td>80CE0124150621C224</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 24</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPEC</td>
+                    <td>80CE012415062236F1</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 18</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPWC</td>
+                    <td>80CE01241806389542</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 17</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPPC</td>
+                    <td>80CE01241206103A9B</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 16</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPEC</td>
+                    <td>80CE01241506223336</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 15</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPKC</td>
+                    <td>80CE0124150621C5E9</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 14</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPWC</td>
+                    <td>80CE012418063895AB</td>
+                </tr>
+            
+                <tr>
+                    <td>DIMM 13</td>
+                    <td>Samsung-2R-32 GB-6400 MT/s-80 bits</td>
+                    <td>M321R4GA3PB2-CCPPC</td>
+                    <td>80CE01241206103C60</td>
+                </tr>
+            
+            </table>
+        </div>
+    </body>
+    </html>
+    
