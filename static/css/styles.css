@@ -13,6 +13,9 @@
   --accent-color: #007bff;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --gradient-underline: linear-gradient(90deg, #007bff, #00c4b4);
+  /* Add variables from commons.css for consistency */
+  --primary: #1E3A8A;
+  --border: #D1D5DB;
 }
 
 :root.dark-mode {
@@ -43,6 +46,10 @@ body {
   background: var(--primary-bg);
   color: var(--text-color);
   transition: background 0.3s ease, color 0.3s ease;
+  width: 100%; /* Ensure body fills the entire screen */
+  max-width: 100%; /* Remove any max-width restriction */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  margin: 0; /* Remove default margin */
 }
 
 /* Loading indicator */
@@ -79,6 +86,7 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
   transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* Ensure sidebar stays on top */
 }
 
 .sidebar::-webkit-scrollbar {
@@ -146,19 +154,30 @@ body {
 /* Main content */
 .main-content {
   flex: 1;
-  margin-left: 250px;
-  padding: 30px;
+  margin-left: 250px; /* Match sidebar width */
+  padding: 20px;
   background: var(--tab-active-bg);
   min-height: 100vh;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  border-radius: 0; /* Remove border-radius to fill edges */
+  box-shadow: none; /* Remove shadow to avoid visual gaps */
   transition: background 0.3s ease;
+  width: calc(100% - 250px); /* Dynamically calculate width to fill remaining space */
+  max-width: 100%; /* Ensure no width restriction */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
+/* Ensure all direct children of main-content fill the width */
+.main-content > * {
+  width: 100%; /* Force children to fill the width */
+  max-width: 100%; /* Remove any max-width restriction */
+}
+
+/* Main header */
 .main-header {
   padding: 20px 0;
   border-bottom: 1px solid var(--border-color);
   margin-bottom: 30px;
+  width: 100%; /* Ensure header fills the container */
 }
 
 .main-header h1 {
@@ -187,6 +206,7 @@ body {
   align-items: center;
 }
 
+/* Ensure theme-toggle button displays icons properly */
 .theme-toggle {
   padding: 10px 14px;
   border: 1px solid var(--border-color);
@@ -195,7 +215,12 @@ body {
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 0.9rem;
+  font-size: 1rem; /* Adjust for icon size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Fixed width for icon button */
+  height: 40px; /* Fixed height for icon button */
 }
 
 .theme-toggle:hover {
@@ -204,11 +229,16 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.theme-toggle i {
+  margin: 0; /* Remove any margin for icons */
+}
+
 /* Tabs */
 .tabs {
   display: flex;
   border-bottom: 2px solid var(--border-color);
   margin-bottom: 25px;
+  width: 100%; /* Ensure tabs fill the container */
 }
 
 .tab {
@@ -244,10 +274,19 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: none;
   border: 1px solid var(--border-color);
+  width: 100%; /* Ensure tab-content fills the container */
+  max-width: 100%; /* Remove any max-width restriction */
+  box-sizing: border-box;
 }
 
 .tab-content.active {
   display: block;
+}
+
+/* Ensure all direct children of tab-content fill the width */
+.tab-content > * {
+  width: 100%; /* Force all children to fill the width */
+  max-width: 100%; /* Remove any max-width restriction */
 }
 
 /* Back to top */
@@ -276,36 +315,38 @@ body {
   transform: translateY(-3px);
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .sidebar {
-      width: 200px;
-      transform: translateX(-200px);
+    width: 200px;
+    transform: translateX(-200px);
   }
 
   .sidebar.active {
-      transform: translateX(0);
+    transform: translateX(0);
   }
 
   .main-content {
-      margin-left: 0;
-      padding: 20px;
-      border-radius: 8px;
+    margin-left: 0;
+    width: 100%; /* Fill the entire screen on mobile */
+    padding: 20px;
+    border-radius: 0; /* Remove border-radius on mobile */
   }
 
   .main-header h1 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 
   .main-header h1::after {
-      width: 40px;
+    width: 40px;
   }
 
   .tab {
-      padding: 10px 18px;
-      font-size: 0.9rem;
+    padding: 10px 18px;
+    font-size: 0.9rem;
   }
 
   .tab-content {
-      padding: 15px;
+    padding: 15px;
   }
 }

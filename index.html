@@ -4,40 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Electrical Validation Dashboard</title>
+    <!-- Include stylesheets -->
     <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/commons.css">
+    <link rel="stylesheet" href="/static/css/homepage.css">
     <link rel="stylesheet" href="/static/css/sidebar.css">
-    <!-- Font Awesome CDN for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/static/js/script.js"></script>
+    <link rel="stylesheet" href="/static/css/configuration.css">
+    <link rel="stylesheet" href="/static/css/tablist.css">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar">
-            <div class="relative w-full mb-4">
-                <input type="text" id="sidebarSearch" placeholder="Search projects...">
-                <button id="sidebarSearchClear" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hidden">✕</button>
-            </div>
-            <div id="projectList"></div>
-        </aside>
-        <!-- Main content -->
-        <main class="main-content">
-            <header class="main-header">
-                <h1 id="project-title">Electrical Validation Dashboard</h1>
-                <div class="controls">
-                    <button id="themeToggle" class="theme-toggle"><i class="fas fa-moon"></i></button>
-                    <button id="sidebarToggle" class="p-2 rounded hover:bg-gray-700 md:hidden"><i class="fas fa-bars"></i></button>
-                </div>
-            </header>
-            <nav class="tabs" role="tablist">
-                <button id="tab-summary" class="tab active" role="tab" aria-controls="summary" aria-selected="true">Summary</button>
-                <button id="tab-configuration" class="tab" role="tab" aria-controls="configuration" aria-selected="false">Configuration</button>
-            </nav>
-            <div id="summary" class="tab-content active" role="tabpanel" aria-labelledby="tab-summary"></div>
-            <div id="configuration" class="tab-content" role="tabpanel" aria-labelledby="tab-configuration" hidden></div>
-            <button id="backToTop" class="back-to-top">↑</button>
-        </main>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="relative">
+            <input type="text" id="sidebarSearch" placeholder="Search projects..." aria-label="Search projects">
+            <span id="sidebarSearchClear" class="hidden">✕</span>
+        </div>
+        <div id="projectList"></div>
     </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="main-header">
+            <h1>Electrical Validation Dashboard</h1>
+            <div class="controls">
+                <button class="theme-toggle" id="themeToggle" data-theme="light">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tablist" role="tablist">
+            <button class="tab active" role="tab" aria-selected="true" aria-controls="summary" id="summary-tab" data-tab="summary">Summary</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="configuration" id="config-tab" data-tab="configuration">Configuration</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="summary" class="tab-content" role="tabpanel" aria-labelledby="summary-tab">
+            <div>Total End Devices<br>Loading...</div>
+            <div>Average Loss (BBFV IO Margin)<br>Loading...</div>
+            <div>Highest Loss Device<br>Loading...</div>
+        </div>
+        <div id="configuration" class="tab-content" role="tabpanel" aria-labelledby="config-tab" hidden>
+            <div id="configuration-content">
+                <p>Loading configuration...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- Include scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/configuration.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProjectList();
+            initializeThemeToggle();
+            initConfiguration();
+        });
+    </script>
 </body>
 </html>

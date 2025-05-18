@@ -38,7 +38,13 @@
 
 .accordion-content {
   background-color: #2d3748;
+  max-height: 0;
+  overflow: hidden;
   transition: max-height 0.3s ease;
+}
+
+.accordion-content.hidden {
+  max-height: 0;
 }
 
 .project-list {

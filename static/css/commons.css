@@ -12,6 +12,10 @@
 body {
   font-family: 'Inter', sans-serif;
   color: var(--text);
+  width: 100%; /* Ensure body fills the screen */
+  max-width: 100%; /* Remove any max-width restriction */
+  margin: 0; /* Remove default margin */
+  box-sizing: border-box; /* Include padding and border in width */
 }
 
 input[type="text"] {
@@ -21,6 +25,7 @@ input[type="text"] {
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   width: 100%;
   color: var(--text);
+  box-sizing: border-box; /* Ensure padding does not affect width */
 }
 
 input[type="text"]:focus {
