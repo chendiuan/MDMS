@@ -1,41 +1,150 @@
-// Tablist Functionality
-function initTablist(context = document) {
-    const tabs = context.querySelectorAll('.tablist .tab');
-    const panels = context.querySelectorAll('.tab-content, .tabpanel');
+// Fetch JSON data for a specific project
+async function loadConfigData(projectPath) {
+    try {
+        const response = await fetch(`reports/${projectPath}/config.json`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return await response.json();
+    } catch (error) {
+        console.error(`Error loading configuration data for ${projectPath}:`, error);
+        return {};
+    }
+}
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            // Update tab states
-            tabs.forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
-            // Hide all panels
-            panels.forEach(p => {
-                p.setAttribute('hidden', 'true');
-                p.style.display = 'none'; // Explicitly hide using CSS
-            });
+// Render BBFV Margins Table
+function renderBBFVTable(container, data) {
+    container.innerHTML = ''; // Clear previous content
+    const table = document.createElement('table');
+    table.className = 'config-table';
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>BBFV IO Margin</td>
+                <td>${data.BBFV_IO_Margin || ''}</td>
+            </tr>
+            <tr>
+                <td>BBFV DDR Margin</td>
+                <td>${data.BBFV_DDR_Margin || ''}</td>
+            </tr>
+        </tbody>
+    `;
+    container.appendChild(table);
+}
 
-            // Activate the clicked tab
-            tab.classList.add('active');
-            tab.setAttribute('aria-selected', 'true');
-            const panelId = tab.getAttribute('aria-controls');
-            const panel = context.getElementById(panelId);
-            if (panel) {
-                panel.removeAttribute('hidden');
-                panel.style.display = 'block'; // Explicitly show using CSS
-            }
-
-            // Load content for the newly active tab
-            loadCurrentTabContent();
+// Render System Configuration Table
+function renderSystemTable(container, data, projectPath) {
+    container.innerHTML = ''; // Clear previous content
+    const table = document.createElement('table');
+    table.className = 'config-table';
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Risk</th>
+                <th>Worst EHxEW</th>
+                <th>End Device</th>
+                <th>Source</th>
+                <th>MCIO Cable</th>
+                <th>AWG</th>
+                <th>Length</th>
+                <th>Loss</th>
+                <th>To</th>
+                <th>Slot</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+    const tbody = table.querySelector('tbody');
+    data.forEach(device => {
+        device.rows.forEach((row, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.risk}</td>
+                <td>${row.worst_ehxew}</td>
+                ${index === 0 ? `<td rowspan="${device.rows.length}">${device.end_device}</td>` : ''}
+                <td>${row.source}</td>
+                <td>${row.mcio_cable}</td>
+                <td>${row.awg}</td>
+                <td>${row.length}</td>
+                <td>${row.loss}</td>
+                <td>${row.to}</td>
+                <td>${row.slot}</td>
+                <td>${row.result ? `<a href="reports/${projectPath}/report.html" class="result-link">Report</a>` : ''}</td>
+            `;
+            tbody.appendChild(tr);
         });
     });
+    container.appendChild(table);
+}
+
+// Render DIMM Configuration Table
+function renderDIMMTable(container, data, projectPath) {
+    container.innerHTML = ''; // Clear previous content
+    const table = document.createElement('table');
+    table.className = 'config-table';
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>DIMM Type</th>
+                <th>Vendor</th>
+                <th>Description</th>
+                <th>PN</th>
+                <th>1DPC</th>
+                <th>2DPC</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    `;
+    const tbody = table.querySelector('tbody');
+    data.forEach(dimm => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${dimm.id}</td>
+            <td>${dimm.vendor}</td>
+            <td>${dimm.description}</td>
+            <td>${dimm.pn}</td>
+            <td>${dimm['1dpc'] ? `<a href="reports/${projectPath}/report.html" class="result-link">Report</a>` : '---'}</td>
+            <td>${dimm['2dpc'] ? `<a href="reports/${projectPath}/report.html" class="result-link">Report</a>` : '---'}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    container.appendChild(table);
+}
+
+// Render tables for a specific project
+async function renderTables(projectPath, configData) {
+    if (!projectPath) {
+        console.warn('No project path provided');
+        return;
+    }
+    // Ensure containers exist
+    const bbfvContainer = document.getElementById('table-container-bbfv');
+    const systemContainer = document.getElementById('table-container-system');
+    const dimmContainer = document.getElementById('table-container-dimm');
+
+    if (!bbfvContainer || !systemContainer || !dimmContainer) {
+        console.error('One or more table containers not found');
+        return;
+    }
+
+    // Render tables with provided configData
+    renderBBFVTable(bbfvContainer, configData.bbfv_margins || {});
+    renderSystemTable(systemContainer, configData.system_configuration || [], projectPath);
+    renderDIMMTable(dimmContainer, configData.dimm_configuration || [], projectPath);
 }
 
 // Search Functionality
 function initConfigurationSearch(context = document) {
     const configSearch = context.querySelector('#searchInput');
-    if (!configSearch) return;
+    if (!configSearch) {
+        console.warn('Search input not found');
+        return;
+    }
 
     let timeout;
     configSearch.addEventListener('input', function () {
@@ -57,7 +166,7 @@ function initConfigurationSearch(context = document) {
                     if (isVisible) hasResults = true;
                 });
 
-                const panel = table.closest('.tabpanel');
+                const panel = table.closest('.configuration-section');
                 const noResults = panel.querySelector('.no-results');
                 if (noResults) noResults.remove();
                 if (!hasResults && searchTerm) {
@@ -131,7 +240,7 @@ function initTableSorting(context = document) {
                 headers.forEach(h => h.removeAttribute('aria-sort'));
                 header.setAttribute('aria-sort', isAscending ? 'ascending' : 'descending');
 
-                if (table.closest('#panel1')) {
+                if (table.closest('#configuration')) {
                     restoreTableForSorting(table);
                 }
 
@@ -151,7 +260,7 @@ function initTableSorting(context = document) {
                 tbody.innerHTML = '';
                 rows.forEach(row => tbody.appendChild(row));
 
-                if (table.closest('#panel1')) {
+                if (table.closest('#configuration')) {
                     mergeEndDeviceCells(table);
                 }
             });
@@ -161,7 +270,13 @@ function initTableSorting(context = document) {
 
 // Initialize Configuration Features
 function initConfiguration(context = document) {
-    initTablist(context);
+    console.log('Initializing configuration for context:', context);
     initConfigurationSearch(context);
     initTableSorting(context);
 }
+
+// Initialize on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded, initializing configuration');
+    initConfiguration();
+});

@@ -48,13 +48,14 @@ function initializeProjectSearch() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Load project list
-    loadProjectList();
+    loadProjectList(); // From script.js
+    initializeProjectSearch(); // From script.js
 
-    // Sidebar toggle for mobile
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
-    sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('-translate-x-full');
-    });
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    }
 });

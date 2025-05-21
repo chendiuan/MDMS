@@ -1,324 +1,336 @@
 {
-    "tablists": [
-      {
-        "id": "io-margin",
-        "title": "BBFV IO Margin",
-        "tabs": [
-          {
-            "id": "io-margin-table",
-            "title": "BBFV IO Margin",
-            "content": [
-              {
-                "worst_ehxew": null,
-                "end_device": "AMD Turin Classic low core",
-                "source": "CPU socket 0",
-                "mcio_cable": null,
-                "awg": null,
-                "length": null,
-                "loss": null,
-                "to": null,
-                "slot": "CPU socket 0",
-                "result": null
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "AMD Turin Classic low core",
-                "source": "CPU socket 1",
-                "mcio_cable": null,
-                "awg": null,
-                "length": null,
-                "loss": null,
-                "to": null,
-                "slot": "CPU socket 1",
-                "result": null
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
-                "source": "Snarf1 D",
-                "mcio_cable": "SC17B39351",
-                "awg": 32,
-                "length": 230,
-                "loss": 5.16,
-                "to": "Cal N Jr.",
-                "slot": "1(Gen5 x16)",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
-                "source": "Snarf2 D",
-                "mcio_cable": "SC17B39353",
-                "awg": 32,
-                "length": 230,
-                "loss": 6.345,
-                "to": "Cal N Jr.",
-                "slot": "2(Gen5 x16)",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
-                "source": "MB (J1)",
-                "mcio_cable": "SC17B39342*2",
-                "awg": 32,
-                "length": 180,
-                "loss": 4.73,
-                "to": "Snarf(Susan)",
-                "slot": "Gen5 x16",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
-                "source": "MB (J2)",
-                "mcio_cable": "SC17B39342*2",
-                "awg": 32,
-                "length": 180,
-                "loss": 4.73,
-                "to": "Snarf(Susan)",
-                "slot": "Gen5 x16",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
-                "source": "MB (J3)",
-                "mcio_cable": "SC17B39342*2",
-                "awg": 32,
-                "length": 180,
-                "loss": 4.73,
-                "to": "Snarf(Susan)",
-                "slot": "Gen5 x16",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
-                "source": "MB (J4",
-                "mcio_cable": "SC17B39342*2",
-                "awg": 32,
-                "length": 180,
-                "loss": 4.73,
-                "to": "Snarf(Susan)",
-                "slot": "Gen5 x16",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf1 E",
-                "mcio_cable": "SC17B39364",
-                "awg": 32,
-                "length": 640,
-                "loss": 8.64,
-                "to": "Larissa NVMe0",
-                "slot": "BP slot 0",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf1 E",
-                "mcio_cable": "SC17B39364",
-                "awg": 32,
-                "length": 640,
-                "loss": 8.64,
-                "to": "Larissa NVMe1",
-                "slot": "BP slot 1",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf1 F",
-                "mcio_cable": "SC17B39363",
-                "awg": 32,
-                "length": 640,
-                "loss": 8.64,
-                "to": "Larissa NVMe2",
-                "slot": "BP slot 2",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf1 F",
-                "mcio_cable": "SC17B39363",
-                "awg": 32,
-                "length": 640,
-                "loss": 8.64,
-                "to": "Larissa NVMe3",
-                "slot": "BP slot 3",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf2 E",
-                "mcio_cable": "SC17B39366",
-                "awg": 32,
-                "length": 450,
-                "loss": 7.052,
-                "to": "Larissa NVMe4",
-                "slot": "BP slot 4",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf2 E",
-                "mcio_cable": "SC17B39366",
-                "awg": 32,
-                "length": 450,
-                "loss": 7.052,
-                "to": "Larissa NVMe5",
-                "slot": "BP slot 5",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf1 F",
-                "mcio_c bipartite": "SC17B39365",
-                "awg": 32,
-                "length": 620,
-                "loss": 7.82,
-                "to": "Quintus NVMe0",
-                "slot": "BP slot 0",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf1 F",
-                "mcio_cable": "SC17B39365",
-                "awg": 32,
-                "length": 620,
-                "loss": 7.82,
-                "to": "Quintus NVMe1",
-                "slot": "BP slot 1",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf2 E",
-                "mcio_cable": "SC17B39367",
-                "awg": 32,
-                "length": 450,
-                "loss": 6.375,
-                "to": "Quintus NVMe2",
-                "slot": "BP slot 2",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
-                "source": "Snarf2 E",
-                "mcio_cable": "SC17B39367",
-                "awg": 32,
-                "length": 450,
-                "loss": 6.375,
-                "to": "Quintus NVMe3",
-                "slot": "BP slot 3",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA BlueField-3 DPU",
-                "source": "Snarf1 C",
-                "mcio_cable": "SC17B44501",
-                "awg": 30,
-                "length": "750,750",
-                "loss": null,
-                "to": "Terry1 (A/B)",
-                "slot": "15(Gen5 x16)",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
-                "source": "Snarf1 D",
-                "mcio_cable": "SC17B44500",
-                "awg": 30,
-                "length": 680,
-                "loss": null,
-                "to": "Terry1 (C)",
-                "slot": "16(Gen5 x16)",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
-                "source": "Snarf2 C",
-                "mcio_cable": "SC17B44501",
-                "awg": 30,
-                "length": "920,920",
-                "loss": null,
-                "to": "Terry2 (A/B)",
-                "slot": "20(Gen5 x16)",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              },
-              {
-                "worst_ehxew": null,
-                "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
-                "source": "Snarf2 D",
-                "mcio_cable": "SC17B44500",
-                "awg": 30,
-                "length": 990,
-                "loss": null,
-                "to": "Terry2 (C)",
-                "slot": "21(Gen5 x16)",
-                "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "ddr-margin",
-        "title": "BBFV DDR Margin",
-        "tabs": [
-          {
-            "id": "ddr-margin-table",
-            "title": "BBFV DDR Margin",
-            "content": [
-              {
-                "dimm_type": 1,
-                "vendor": "Samsung",
-                "description": "6400 16G 1Rx8 RDIMM",
-                "pn": "SM37B81294",
-                "1dpc": "report/AMD/Oahu/Margin/MB1.html",
-                "2dpc": null
-              },
-              {
-                "dimm_type": 3,
-                "vendor": "Micron",
-                "description": "6400 32G 1Rx4 RDIMM",
-                "pn": "SM37B81295",
-                "1dpc": null,
-                "2dpc": "report/AMD/Oahu/Margin/MB1.html"
-              },
-              {
-                "dimm_type": 5,
-                "vendor": "Samsung",
-                "description": "6400 64G 2Rx8 RDIMM",
-                "pn": "SM37B81296",
-                "1dpc": "report/AMD/Oahu/Margin/MB1.html",
-                "2dpc": null
-              },
-              {
-                "dimm_type": 7,
-                "vendor": "Hynix",
-                "description": "6400 64G 2Rx8 RDIMM",
-                "pn": "SM37B81297",
-                "1dpc": null,
-                "2dpc": "report/AMD/Oahu/Margin/MB1.html"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  "bbfv_margins": {
+    "BBFV_IO_Margin": "",
+    "BBFV_DDR_Margin": ""
+  },
+  "system_configuration": [
+    {
+      "end_device": "AMD Turin Classic low core",
+      "rows": [
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "CPU socket 0",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "",
+          "slot": "CPU socket 0",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "CPU socket 1",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "",
+          "slot": "CPU socket 1",
+          "result": ""
+        }
+      ]
+    },
+    {
+      "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
+      "rows": [
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf1 D",
+          "mcio_cable": "SC17B39351",
+          "awg": "32",
+          "length": "230",
+          "loss": "5.16",
+          "to": "Cal N Jr.",
+          "slot": "1(Gen5 x16)",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf2 D",
+          "mcio_cable": "SC17B39353",
+          "awg": "32",
+          "length": "230",
+          "loss": "6.345",
+          "to": "Cal N Jr.",
+          "slot": "2(Gen5 x16)",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf1 D",
+          "mcio_cable": "SC17B44500",
+          "awg": "30",
+          "length": "680",
+          "loss": "",
+          "to": "Terry1 (C)",
+          "slot": "16(Gen5 x16)",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf2 C",
+          "mcio_cable": "SC17B44501",
+          "awg": "30",
+          "length": "920,920",
+          "loss": "",
+          "to": "Terry2 (A/B)",
+          "slot": "20(Gen5 x16)",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf2 D",
+          "mcio_cable": "SC17B44500",
+          "awg": "30",
+          "length": "990",
+          "loss": "",
+          "to": "Terry2 (C)",
+          "slot": "21(Gen5 x16)",
+          "result": ""
+        }
+      ]
+    },
+    {
+      "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
+      "rows": [
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "MB (J1)",
+          "mcio_cable": "SC17B39342*2",
+          "awg": "32",
+          "length": "180",
+          "loss": "4.73",
+          "to": "Snarf(Susan)",
+          "slot": "Gen5 x16",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "MB (J2)",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "",
+          "slot": "Gen5 x16",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "MB (J3)",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "",
+          "slot": "Gen5 x16",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "MB (J4)",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "",
+          "slot": "Gen5 x16",
+          "result": ""
+        }
+      ]
+    },
+    {
+      "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
+      "rows": [
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf1 E",
+          "mcio_cable": "SC17B39364",
+          "awg": "32",
+          "length": "640",
+          "loss": "8.64",
+          "to": "Larissa NVMe0",
+          "slot": "BP slot 0",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "Larissa NVMe1",
+          "slot": "BP slot 1",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf1 F",
+          "mcio_cable": "SC17B39363",
+          "awg": "32",
+          "length": "640",
+          "loss": "8.64",
+          "to": "Larissa NVMe2",
+          "slot": "BP slot 2",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "Larissa NVMe3",
+          "slot": "BP slot 3",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf2 E",
+          "mcio_cable": "SC17B39366",
+          "awg": "32",
+          "length": "450",
+          "loss": "7.052",
+          "to": "Larissa NVMe4",
+          "slot": "BP slot 4",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "Larissa NVMe5",
+          "slot": "BP slot 5",
+          "result": ""
+        }
+      ]
+    },
+    {
+      "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
+      "rows": [
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf1 F",
+          "mcio_cable": "SC17B39365",
+          "awg": "32",
+          "length": "620",
+          "loss": "7.82",
+          "to": "Quintus NVMe0",
+          "slot": "BP slot 0",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "Quintus NVMe1",
+          "slot": "BP slot 1",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf2 E",
+          "mcio_cable": "SC17B39367",
+          "awg": "32",
+          "length": "450",
+          "loss": "6.375",
+          "to": "Quintus NVMe2",
+          "slot": "BP slot 2",
+          "result": ""
+        },
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "",
+          "mcio_cable": "",
+          "awg": "",
+          "length": "",
+          "loss": "",
+          "to": "Quintus NVMe3",
+          "slot": "BP slot 3",
+          "result": ""
+        }
+      ]
+    },
+    {
+      "end_device": "NVIDIA BlueField-3 DPU",
+      "rows": [
+        {
+          "risk": "",
+          "worst_ehxew": "",
+          "source": "Snarf1 C",
+          "mcio_cable": "SC17B44501",
+          "awg": "30",
+          "length": "750,750",
+          "loss": "",
+          "to": "Terry1 (A/B)",
+          "slot": "15(Gen5 x16)",
+          "result": ""
+        }
+      ]
+    }
+  ],
+  "dimm_configuration": [
+    {
+      "id": 1,
+      "vendor": "Samsung",
+      "description": "6400 16G 1Rx8 RDIMM",
+      "pn": "SM37B81294",
+      "1dpc": "Report",
+      "2dpc": ""
+    },
+    {
+      "id": 3,
+      "vendor": "Micron",
+      "description": "6400 32G 1Rx4 RDIMM",
+      "pn": "SM37B81295",
+      "1dpc": "",
+      "2dpc": "Report"
+    },
+    {
+      "id": 5,
+      "vendor": "Samsung",
+      "description": "6400 64G 2Rx8 RDIMM",
+      "pn": "SM37B81296",
+      "1dpc": "Report",
+      "2dpc": ""
+    },
+    {
+      "id": 7,
+      "vendor": "Hynix",
+      "description": "6400 64G 2Rx8 RDIMM",
+      "pn": "SM37B81297",
+      "1dpc": "",
+      "2dpc": "Report"
+    }
+  ]
+}

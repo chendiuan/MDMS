@@ -1,6 +1,7 @@
-// Global variables to track current project and brand
+// Global variables to track current project, brand, and config data
 let currentProject = null;
 let currentBrand = null;
+let currentConfigData = null; // Store config data
 
 // Load project list into accordion
 async function loadProjectList() {
@@ -64,7 +65,13 @@ async function loadProjectList() {
                 const project = this.getAttribute('data-project');
                 currentProject = project;
                 currentBrand = brand;
-                loadCurrentTabContent(); // Load content for the active tab
+                currentConfigData = null; // Reset config data
+                const configSearch = document.querySelector('#searchInput');
+                if (configSearch) {
+                    configSearch.value = ''; // Clear search input
+                    configSearch.dispatchEvent(new Event('input')); // Trigger search update
+                }
+                loadCurrentTabContent(); // Load configuration content
             });
         });
 
@@ -81,95 +88,87 @@ function initializeProjectSearch() {
     const projectSearchClear = document.getElementById('sidebarSearchClear');
     const projectList = document.getElementById('projectList');
 
-    projectSearch.addEventListener('input', () => {
-        const query = projectSearch.value.toLowerCase();
-        const accordionItems = document.querySelectorAll('.accordion-item');
-        let anyVisible = false;
+    if (projectSearch && projectSearchClear && projectList) {
+        projectSearch.addEventListener('input', () => {
+            const query = projectSearch.value.toLowerCase();
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            let anyVisible = false;
 
-        accordionItems.forEach(item => {
-            const header = item.querySelector('.accordion-header');
-            const content = item.querySelector('.accordion-content');
-            const links = item.querySelectorAll('.project-link');
-            let hasVisibleLinks = false;
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const links = item.querySelectorAll('.project-link');
+                let hasVisibleLinks = false;
 
-            links.forEach(link => {
-                const projectName = link.getAttribute('data-project').toLowerCase();
-                const isVisible = projectName.includes(query);
-                link.parentElement.style.display = isVisible ? '' : 'none';
-                if (isVisible) hasVisibleLinks = true;
+                links.forEach(link => {
+                    const projectName = link.getAttribute('data-project').toLowerCase();
+                    const isVisible = projectName.includes(query);
+                    link.parentElement.style.display = isVisible ? '' : 'none';
+                    if (isVisible) hasVisibleLinks = true;
+                });
+
+                item.style.display = hasVisibleLinks || !query ? '' : 'none';
+                if (hasVisibleLinks && query) {
+                    header.setAttribute('aria-expanded', 'true');
+                    header.querySelector('i').classList.remove('fa-chevron-down');
+                    header.querySelector('i').classList.add('fa-chevron-up');
+                    content.classList.remove('hidden');
+                    content.style.maxHeight = `${content.scrollHeight}px`;
+                    anyVisible = true;
+                } else {
+                    header.setAttribute('aria-expanded', 'false');
+                    header.querySelector('i').classList.add('fa-chevron-down');
+                    header.querySelector('i').classList.remove('fa-chevron-up');
+                    content.classList.add('hidden');
+                    content.style.maxHeight = '0';
+                    anyVisible = !query;
+                }
             });
 
-            item.style.display = hasVisibleLinks || !query ? '' : 'none';
-            if (hasVisibleLinks && query) {
-                header.setAttribute('aria-expanded', 'true');
-                header.querySelector('i').classList.remove('fa-chevron-down');
-                header.querySelector('i').classList.add('fa-chevron-up');
-                content.classList.remove('hidden');
-                content.style.maxHeight = `${content.scrollHeight}px`;
-                anyVisible = true;
-            } else {
-                header.setAttribute('aria-expanded', 'false');
-                header.querySelector('i').classList.add('fa-chevron-down');
-                header.querySelector('i').classList.remove('fa-chevron-up');
-                content.classList.add('hidden');
-                content.style.maxHeight = '0';
-                anyVisible = !query;
+            projectSearchClear.classList.toggle('hidden', !projectSearch.value);
+            if (!anyVisible && query) {
+                projectList.innerHTML = '<p class="text-red-400 p-4">No matching projects</p>';
+            } else if (!anyVisible && !query) {
+                projectList.innerHTML = '<p>Loading projects...</p>';
             }
         });
 
-        projectSearchClear.classList.toggle('hidden', !projectSearch.value);
-        if (!anyVisible && query) {
-            projectList.innerHTML = '<p class="text-red-400 p-4">No matching projects</p>';
-        } else if (!anyVisible && !query) {
-            projectList.innerHTML = '<p>Loading projects...</p>';
-        }
-    });
-
-    projectSearchClear.addEventListener('click', () => {
-        projectSearch.value = '';
-        projectSearch.dispatchEvent(new Event('input'));
-    });
+        projectSearchClear.addEventListener('click', () => {
+            projectSearch.value = '';
+            projectSearch.dispatchEvent(new Event('input'));
+        });
+    } else {
+        console.warn('Sidebar search elements not found:', {
+            projectSearch: !!projectSearch,
+            projectSearchClear: !!projectSearchClear,
+            projectList: !!projectList
+        });
+    }
 }
 
-// Load content for the currently active tab
+// Load configuration content for the selected project
 async function loadCurrentTabContent() {
     if (!currentProject || !currentBrand) return;
 
-    const activeTab = document.querySelector('.tab.active');
-    if (!activeTab) return;
-
-    const tabId = activeTab.getAttribute('data-tab');
-
-    if (tabId === 'summary') {
-        const summaryContent = document.getElementById('summary');
+    const configContent = document.getElementById('configuration');
+    if (configContent) {
+        configContent.style.display = 'block';
         try {
-            const summaryResponse = await fetch(`/reports/${currentBrand}/${currentProject}/summary.html`);
-            if (!summaryResponse.ok) throw new Error(`Failed to load summary.html: ${summaryResponse.statusText}`);
-            const summaryHtml = await summaryResponse.text();
-            summaryContent.innerHTML = summaryHtml;
-        } catch (error) {
-            console.error('Error loading summary:', error);
-            summaryContent.innerHTML = `<p class="text-red-400 p-4">Failed to load summary for ${currentProject}. Error: ${error.message}</p>`;
-        }
-    } else if (tabId === 'configuration') {
-        const configContent = document.getElementById('configuration-content');
-        try {
-            const configResponse = await fetch(`/reports/${currentBrand}/${currentProject}/configuration.html`);
-            if (!configResponse.ok) throw new Error(`Failed to load configuration.html: ${configResponse.statusText}`);
-            const configHtml = await configResponse.text();
-            configContent.innerHTML = configHtml;
-
-            // Reinitialize configuration features and force CSS refresh
-            const configurationDiv = document.getElementById('configuration');
-            initConfiguration(configurationDiv);
-            // Force reflow to apply CSS
-            configurationDiv.style.display = 'none';
-            configurationDiv.offsetHeight; // Trigger reflow
-            configurationDiv.style.display = '';
+            if (!currentConfigData) {
+                const configResponse = await fetch(`/reports/${currentBrand}/${currentProject}/config.json`);
+                if (!configResponse.ok) {
+                    throw new Error(`Failed to load config.json: ${configResponse.statusText}`);
+                }
+                currentConfigData = await configResponse.json();
+                console.log('Config data loaded:', currentConfigData); // Debug
+            }
+            renderTables(`${currentBrand}/${currentProject}`, currentConfigData);
         } catch (error) {
             console.error('Error loading configuration:', error);
-            configContent.innerHTML = `<p class="text-red-400 p-4">Failed to load configuration for ${currentProject}. Error: ${error.message}</p>`;
+            configContent.innerHTML = `<p class="text-red-400 p-4">Configuration data for ${currentProject} is not available. Please check the file or contact support.</p>`;
         }
+    } else {
+        console.warn('Configuration element not found in DOM');
     }
 }
 
@@ -178,19 +177,116 @@ function initializeThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    html.classList.toggle('dark-mode', savedTheme === 'dark');
-    themeToggle.setAttribute('data-theme', savedTheme);
-    themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    if (themeToggle) {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.classList.toggle('dark-mode', savedTheme === 'dark');
+        themeToggle.setAttribute('data-theme', savedTheme);
+        themeToggle.innerHTML = savedTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = themeToggle.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = themeToggle.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-        html.classList.toggle('dark-mode', newTheme === 'dark');
-        themeToggle.setAttribute('data-theme', newTheme);
-        themeToggle.innerHTML = newTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            html.classList.toggle('dark-mode', newTheme === 'dark');
+            themeToggle.setAttribute('data-theme', newTheme);
+            themeToggle.innerHTML = newTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 
-        localStorage.setItem('theme', newTheme);
-    });
+            localStorage.setItem('theme', newTheme);
+        });
+    } else {
+        console.warn('Theme toggle element not found in DOM');
+    }
 }
+
+// Initialize navigation buttons and date/time display
+function initializeNavigation() {
+    // Home button
+    const homeButton = document.getElementById('homeButton');
+    if (homeButton) {
+        homeButton.addEventListener('click', () => {
+            window.location.href = '/index.html';
+        });
+    } else {
+        console.warn('Home button not found in DOM');
+    }
+
+    // About button with jQuery
+    $(document).ready(function () {
+        const $aboutButton = $('#aboutButton');
+        const $aboutModal = $('#aboutModal');
+        const $closeAboutModal = $('#closeAboutModal');
+
+        if ($aboutButton.length && $aboutModal.length && $closeAboutModal.length) {
+            $aboutModal.addClass('hidden'); // Ensure modal is hidden on load
+            $aboutButton.on('click', function () {
+                console.log('About button clicked');
+                $aboutModal.removeClass('hidden').fadeIn(300);
+            });
+            $closeAboutModal.on('click', function () {
+                console.log('Close modal clicked');
+                $aboutModal.fadeOut(300, function () {
+                    $(this).addClass('hidden');
+                });
+            });
+            $aboutModal.on('click', function (e) {
+                if ($(e.target).is($aboutModal)) {
+                    console.log('Clicked outside modal');
+                    $aboutModal.fadeOut(300, function () {
+                        $(this).addClass('hidden');
+                    });
+                }
+            });
+        } else {
+            console.warn('About button or modal elements not found:', {
+                aboutButton: $aboutButton.length,
+                aboutModal: $aboutModal.length,
+                closeAboutModal: $closeAboutModal.length
+            });
+        }
+    });
+
+    // Date and time display
+    const dateTimeDisplay = document.getElementById('dateTimeDisplay');
+    if (dateTimeDisplay) {
+        function updateDateTime() {
+            try {
+                const now = new Date();
+                const options = {
+                    timeZone: 'America/Chicago',
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: true
+                };
+                const formattedDateTime = now.toLocaleString('en-US', options);
+                dateTimeDisplay.textContent = formattedDateTime;
+            } catch (error) {
+                console.error('Error updating date/time:', error);
+                dateTimeDisplay.textContent = 'Unable to display time';
+            }
+        }
+
+        // Update immediately and every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    } else {
+        console.warn('dateTimeDisplay element not found in DOM');
+    }
+}
+
+// Call initialization functions on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Ensure modal is hidden on page load
+    const aboutModal = document.getElementById('aboutModal');
+    if (aboutModal) {
+        aboutModal.classList.add('hidden');
+    }
+    loadProjectList();
+    initializeThemeToggle();
+    loadCurrentTabContent();
+    initializeNavigation(); // Initialize navigation buttons and date/time
+});

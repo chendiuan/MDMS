@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Configuration</title>
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/static/css/configuration.css">
+</head>
+<body>
+    <h1>System Configuration</h1>
+
+    <div class="header">
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search configurations...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="tablist" role="tablist">
+        <div class="tab active" role="tab" aria-controls="panel1" aria-selected="true" id="tab1">BBFV Margins</div>
+        <div class="tab" role="tab" aria-controls="panel2" aria-selected="false" id="tab2">System Configuration</div>
+        <div class="tab" role="tab" aria-controls="panel3" aria-selected="false" id="tab3">DIMM Configuration</div>
+    </div>
+
+    <div class="tabpanel" id="panel1" role="tabpanel" aria-labelledby="tab1">
+        <div id="table-container-bbfv"></div>
+    </div>
+    <div class="tabpanel" id="panel2" role="tabpanel" aria-labelledby="tab2" hidden>
+        <div id="table-container-system"></div>
+    </div>
+    <div class="tabpanel" id="panel3" role="tabpanel" aria-labelledby="tab3" hidden>
+        <div id="table-container-dimm"></div>
+    </div>
+
+    <script src="/static/js/configuration.js"></script>
+</body>
+</html>

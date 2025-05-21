@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary</title>
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <h1>Summary</h1>
+
+    <section class="stats">
+        <div class="stat-card">
+            <h3>Total End Devices</h3>
+            <p id="totalDevices">Loading...</p>
+        </div>
+        <div class="stat-card">
+            <h3>Average Loss (BBFV IO Margin)</h3>
+            <p id="averageLoss">Loading...</p>
+        </div>
+        <div class="stat-card">
+            <h3>Highest Loss Device</h3>
+            <p id="highestLossDevice">Loading...</p>
+        </div>
+    </section>
+
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script>
+        async function loadSummary() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectPath = urlParams.get('project');
+            if (!projectPath) {
+                document.getElementById('totalDevices').textContent = 'Please select a project from the sidebar.';
+                return;
+            }
+
+            try {
+                const response = await fetch(`reports/${projectPath}/config.json`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+
+                const systemConfig = data.system_configuration || [];
+                const totalDevices = systemConfig.length;
+                const losses = systemConfig.flatMap(device => 
+                    device.rows.map(row => parseFloat(row.loss) || 0)
+                ).filter(loss => loss > 0);
+                const averageLoss = losses.length ? (losses.reduce((sum, loss) => sum + loss, 0) / losses.length).toFixed(2) : 'N/A';
+                const highestLossDevice = systemConfig.reduce((max, device) => {
+                    const maxLoss = Math.max(...device.rows.map(row => parseFloat(row.loss) || 0));
+                    return maxLoss > (max.loss || 0) ? { name: device.end_device, loss: maxLoss } : max;
+                }, { name: 'N/A', loss: 0 });
+
+                document.getElementById('totalDevices').textContent = totalDevices;
+                document.getElementById('averageLoss').textContent = averageLoss;
+                document.getElementById('highestLossDevice').textContent = `${highestLossDevice.name} (${highestLossDevice.loss})`;
+            } catch (error) {
+                console.error('Error loading summary:', error);
+                document.getElementById('totalDevices').textContent = 'Failed to load data';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSummary);
+    </script>
+</body>
+</html>

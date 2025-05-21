@@ -45,15 +45,15 @@ function updateTable(tabId, data) {
 // Function to toggle search clear buttons
 function toggleSearchClearButtons() {
     const searchInputs = {
-        project: document.getElementById('projectSearch'),
-        overview: document.getElementById('overviewSearch'),
-        metrics: document.getElementById('metricsSearch'),
-        errors: document.getElementById('errorsSearch')
+        project: document.getElementById('sidebarSearch'),
+        config: document.getElementById('searchInput')
     };
 
     Object.keys(searchInputs).forEach(id => {
         const input = searchInputs[id];
         const clearButton = document.getElementById(`${id}SearchClear`);
-        clearButton.classList.toggle('hidden', !input.value);
+        if (clearButton) {
+            clearButton.classList.toggle('hidden', !input.value);
+        }
     });
 }
