@@ -10,32 +10,6 @@ async function loadConfigData(projectPath) {
     }
 }
 
-// Render BBFV Margins Table
-function renderBBFVTable(container, data) {
-    container.innerHTML = ''; // Clear previous content
-    const table = document.createElement('table');
-    table.className = 'config-table';
-    table.innerHTML = `
-        <thead>
-            <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>BBFV IO Margin</td>
-                <td>${data.BBFV_IO_Margin || ''}</td>
-            </tr>
-            <tr>
-                <td>BBFV DDR Margin</td>
-                <td>${data.BBFV_DDR_Margin || ''}</td>
-            </tr>
-        </tbody>
-    `;
-    container.appendChild(table);
-}
-
 // Render System Configuration Table
 function renderSystemTable(container, data, projectPath) {
     container.innerHTML = ''; // Clear previous content
@@ -180,6 +154,7 @@ function initConfigurationSearch(context = document) {
     });
 }
 
+/*
 // Restore Table for Sorting
 function restoreTableForSorting(table) {
     const rows = table.querySelectorAll('tbody tr');
@@ -228,44 +203,12 @@ function mergeEndDeviceCells(table) {
         }
     }
 }
+*/
 
 // Table Sorting
 function initTableSorting(context = document) {
-    const tables = context.querySelectorAll('.config-table');
-    tables.forEach(table => {
-        const headers = table.querySelectorAll('th');
-        headers.forEach((header, index) => {
-            header.addEventListener('click', () => {
-                const isAscending = header.getAttribute('aria-sort') !== 'ascending';
-                headers.forEach(h => h.removeAttribute('aria-sort'));
-                header.setAttribute('aria-sort', isAscending ? 'ascending' : 'descending');
-
-                if (table.closest('#configuration')) {
-                    restoreTableForSorting(table);
-                }
-
-                const rows = Array.from(table.querySelectorAll('tbody tr'));
-                rows.sort((a, b) => {
-                    let aText = a.cells[index].textContent.trim();
-                    let bText = b.cells[index].textContent.trim();
-                    if (['AWG', 'Length', 'Loss'].includes(header.textContent)) {
-                        aText = parseFloat(aText) || 0;
-                        bText = parseFloat(bText) || 0;
-                        return isAscending ? aText - bText : bText - aText;
-                    }
-                    return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
-                });
-
-                const tbody = table.querySelector('tbody');
-                tbody.innerHTML = '';
-                rows.forEach(row => tbody.appendChild(row));
-
-                if (table.closest('#configuration')) {
-                    mergeEndDeviceCells(table);
-                }
-            });
-        });
-    });
+    console.log('Initializing configuration for context:', context);
+    initConfigurationSearch(context);
 }
 
 // Initialize Configuration Features
@@ -280,3 +223,83 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded, initializing configuration');
     initConfiguration();
 });
+
+// Dynamically generate tabs based on JSON files in the report folder
+async function generateDynamicTabs(projectPath) {
+    const tabList = document.querySelector('.tablist');
+    const container = document.getElementById('configuration');
+    if (!tabList || !container) {
+        console.error('Tab list or configuration container not found.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/reports/${projectPath}/`);
+        if (!response.ok) throw new Error(`Failed to access project directory: ${response.statusText}`);
+        const htmlText = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        const files = Array.from(doc.querySelectorAll('a'))
+            .map(link => link.getAttribute('href'))
+            .filter(file => file.endsWith('.json') && file !== 'config.json');
+
+        // Clear existing
+        tabList.innerHTML = '';
+        container.innerHTML = '';
+
+        files.forEach((file, index) => {
+            const tabId = `dynamic-tab-${index}`;
+            const panelId = `dynamic-panel-${index}`;
+            // Normalize the title by replacing non-standard spaces with regular spaces
+            const title = file.replace('.json', '').replace(/\u00A0/g, ' ');
+
+            // Create tab
+            const tab = document.createElement('div');
+            tab.className = 'tab' + (index === 0 ? ' active' : '');
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('id', tabId);
+            tab.setAttribute('aria-controls', panelId);
+            tab.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+            tab.innerText = title;
+            tabList.appendChild(tab);
+
+            // Create panel
+            const panel = document.createElement('div');
+            panel.className = 'tabpanel dynamic-tabpanel configuration-section';
+            panel.setAttribute('id', panelId);
+            panel.setAttribute('role', 'tabpanel');
+            panel.setAttribute('aria-labelledby', tabId);
+            if (index !== 0) panel.hidden = true;
+            panel.innerHTML = `<p>Loading ${file}...</p>`;
+            container.appendChild(panel);
+
+            // Load content
+            fetch(`/reports/${projectPath}/${file}`)
+                .then(res => res.json())
+                .then(json => {
+                    const html = renderJsonAsTable(json);
+                    panel.innerHTML = html || `<pre>${JSON.stringify(json, null, 2)}</pre>`;
+                    initConfiguration(panel); // Initialize search and sorting for this panel
+                })
+                .catch(err => {
+                    panel.innerHTML = `<p class="text-red-500">Failed to load ${file}</p>`;
+                    console.error(`Error loading ${file}:`, err);
+                });
+        });
+
+        // Handle tab switching
+        tabList.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabList.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                container.querySelectorAll('.tabpanel').forEach(p => p.hidden = true);
+                tab.classList.add('active');
+                const targetId = tab.getAttribute('aria-controls');
+                const targetPanel = document.getElementById(targetId);
+                if (targetPanel) targetPanel.hidden = false;
+            });
+        });
+
+    } catch (error) {
+        console.error('Error generating dynamic tabs:', error);
+    }
+}

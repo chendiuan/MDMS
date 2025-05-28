@@ -15,5 +15,6 @@
     { "name": "Perth" ,"vendor": "Intel"},
     { "name": "Santorini" ,"vendor": "Intel"},
     { "name": "Sifnos" ,"vendor": "Intel"},
+    { "name": "Suzuka" ,"vendor": "Intel"},
     { "name": "Tasmania" ,"vendor": "NVIDIA"}
 ]

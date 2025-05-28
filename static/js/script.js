@@ -149,20 +149,18 @@ function initializeProjectSearch() {
 // Load configuration content for the selected project
 async function loadCurrentTabContent() {
     if (!currentProject || !currentBrand) return;
-
     const configContent = document.getElementById('configuration');
     if (configContent) {
         configContent.style.display = 'block';
+        // Update page <h1> and <title>
+        const projectTitle = document.getElementById('projectTitle');
+        if (projectTitle) {
+            projectTitle.textContent = `System Configuration - ${currentProject}`;
+        }
+        document.title = `Configuration - ${currentProject}`;
         try {
-            if (!currentConfigData) {
-                const configResponse = await fetch(`/reports/${currentBrand}/${currentProject}/config.json`);
-                if (!configResponse.ok) {
-                    throw new Error(`Failed to load config.json: ${configResponse.statusText}`);
-                }
-                currentConfigData = await configResponse.json();
-                console.log('Config data loaded:', currentConfigData); // Debug
-            }
-            renderTables(`${currentBrand}/${currentProject}`, currentConfigData);
+            // generate tab based on reports/*.json
+            await generateDynamicTabs(`${currentBrand}/${currentProject}`);
         } catch (error) {
             console.error('Error loading configuration:', error);
             configContent.innerHTML = `<p class="text-red-400 p-4">Configuration data for ${currentProject} is not available. Please check the file or contact support.</p>`;
@@ -171,6 +169,7 @@ async function loadCurrentTabContent() {
         console.warn('Configuration element not found in DOM');
     }
 }
+
 
 // Initialize theme toggle on page load
 function initializeThemeToggle() {
@@ -246,7 +245,7 @@ function initializeNavigation() {
     });
 
     // Date and time display
-    const dateTimeDisplay = document.getElementById('dateTimeDisplay');
+    const dateTimeDisplay = document.getElementById('currentDateTime');
     if (dateTimeDisplay) {
         function updateDateTime() {
             try {
@@ -280,13 +279,133 @@ function initializeNavigation() {
 
 // Call initialization functions on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Ensure modal is hidden on page load
     const aboutModal = document.getElementById('aboutModal');
-    if (aboutModal) {
-        aboutModal.classList.add('hidden');
+    if (aboutModal) aboutModal.classList.add('hidden');
+
+    const path = window.location.pathname;
+
+    if (path.includes('configuration.html')) {
+        // Get brand & project from URL
+        const { brand, project } = getUrlParams();
+        if (brand && project) {
+            currentBrand = brand;
+            currentProject = project;
+            loadCurrentTabContent();
+        } else {
+            console.warn('Missing brand or project in URL');
+        }
+    } else {
+        loadProjectList();
     }
-    loadProjectList();
+
     initializeThemeToggle();
-    loadCurrentTabContent();
-    initializeNavigation(); // Initialize navigation buttons and date/time
+    initializeNavigation();
+});
+
+
+function renderJsonAsTable(json) {
+    try {
+        if (!json.tablists || !Array.isArray(json.tablists)) return null;
+
+        const container = document.createElement('div');
+
+        json.tablists.forEach(tablist => {
+            tablist.tabs.forEach(tab => {
+                const content = tab.content;
+                if (!Array.isArray(content)) return;
+
+                // Gather all headers across rows
+                const headers = [...new Set(content.flatMap(row => Object.keys(row)))];
+
+                // Create table element
+                const table = document.createElement('table');
+                table.className = 'config-table';
+
+                // Thead
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                headers.forEach(h => {
+                    const th = document.createElement('th');
+                    th.textContent = h;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Tbody
+                const tbody = document.createElement('tbody');
+                content.forEach(row => {
+                    const tr = document.createElement('tr');
+                    headers.forEach(h => {
+                        const td = document.createElement('td');
+                        const val = row[h];
+                        if (typeof val === 'string' && val.includes('.html')) {
+                            const link = document.createElement('a');
+                            link.href = val;
+                            link.target = '_blank';
+                            link.textContent = 'Report';
+                            td.appendChild(link);
+                        } else {
+                            td.textContent = val !== null && val !== undefined ? val : '';
+                        }
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+
+                // Attach column highlight events
+                table.addEventListener('mouseover', highlightColumn);
+                table.addEventListener('mouseout', clearHighlight);
+
+                // Wrap with title
+                const title = document.createElement('h3');
+                container.appendChild(title);
+                container.appendChild(table);
+            });
+        });
+
+        return container.innerHTML;
+    } catch (err) {
+        console.error('Failed to render JSON table:', err);
+        return null;
+    }
+}
+
+
+function initConfiguration(context = document) {
+    console.log('Initializing configuration for context:', context);
+    initConfigurationSearch(context);
+
+    const tables = context.getElementsByClassName('config-table');
+    for (let table of tables) {
+        table.addEventListener('mouseover', highlightColumn);
+        table.addEventListener('mouseout', clearHighlight);
+    }
+}
+
+function highlightColumn(event) {
+    const cell = event.target.closest('td');
+    if (!cell || !cell.closest('.config-table')) return;
+
+    const table = cell.closest('.config-table');
+    const index = cell.cellIndex;
+
+    const cellsInColumn = table.querySelectorAll(`td:nth-child(${index + 1}), th:nth-child(${index + 1})`);
+    cellsInColumn.forEach(cell => cell.classList.add('highlight-column'));
+}
+
+function clearHighlight(event) {
+    const cell = event.target.closest('td');
+    if (!cell || !cell.closest('.config-table')) return;
+
+    const table = cell.closest('.config-table');
+    const index = cell.cellIndex;
+
+    const cellsInColumn = table.querySelectorAll(`td:nth-child(${index + 1}), th:nth-child(${index + 1})`);
+    cellsInColumn.forEach(cell => cell.classList.remove('highlight-column'));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initConfiguration();
 });

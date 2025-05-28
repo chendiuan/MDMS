@@ -1,0 +1,46 @@
+{
+    "tablists": [
+      {
+        "id": "ddr-margin",
+        "tabs": [
+          {
+            "id": "ddr-margin-table",
+            "content": [
+              {
+                "dimm_type": 1,
+                "vendor": "Samsung",
+                "description": "6400 16G 1Rx8 RDIMM",
+                "pn": "SM37B81294",
+                "1dpc": "report/AMD/Oahu/Margin/MB1.html",
+                "2dpc": null
+              },
+              {
+                "dimm_type": 3,
+                "vendor": "Micron",
+                "description": "6400 32G 1Rx4 RDIMM",
+                "pn": "SM37B81295",
+                "1dpc": null,
+                "2dpc": "report/AMD/Oahu/Margin/MB1.html"
+              },
+              {
+                "dimm_type": 5,
+                "vendor": "Samsung",
+                "description": "6400 64G 2Rx8 RDIMM",
+                "pn": "SM37B81296",
+                "1dpc": "report/AMD/Oahu/Margin/MB1.html",
+                "2dpc": null
+              },
+              {
+                "dimm_type": 7,
+                "vendor": "Hynix",
+                "description": "6400 64G 2Rx8 RDIMM",
+                "pn": "SM37B81297",
+                "1dpc": null,
+                "2dpc": "report/AMD/Oahu/Margin/MB1.html"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

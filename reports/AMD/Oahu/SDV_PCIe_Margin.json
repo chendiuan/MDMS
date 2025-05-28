@@ -2,13 +2,12 @@
     "tablists": [
       {
         "id": "io-margin",
-        "title": "BBFV IO Margin",
         "tabs": [
           {
             "id": "io-margin-table",
-            "title": "BBFV IO Margin",
             "content": [
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "AMD Turin Classic low core",
                 "source": "CPU socket 0",
@@ -21,6 +20,7 @@
                 "result": null
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "AMD Turin Classic low core",
                 "source": "CPU socket 1",
@@ -33,6 +33,7 @@
                 "result": null
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
                 "source": "Snarf1 D",
@@ -45,6 +46,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
                 "source": "Snarf2 D",
@@ -57,6 +59,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
                 "source": "MB (J1)",
@@ -69,6 +72,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
                 "source": "MB (J2)",
@@ -81,6 +85,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
                 "source": "MB (J3)",
@@ -93,6 +98,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA H100 80GB PCIe Gen5 Passive GPU",
                 "source": "MB (J4",
@@ -105,6 +111,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf1 E",
@@ -117,6 +124,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf1 E",
@@ -129,6 +137,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf1 F",
@@ -141,6 +150,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf1 F",
@@ -153,6 +163,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf2 E",
@@ -165,6 +176,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E1.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf2 E",
@@ -177,6 +189,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf1 F",
@@ -189,6 +202,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf1 F",
@@ -201,6 +215,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf2 E",
@@ -213,6 +228,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "ThinkSystem E3.S 5.9mm 7450P 3.84TB",
                 "source": "Snarf2 E",
@@ -225,6 +241,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA BlueField-3 DPU",
                 "source": "Snarf1 C",
@@ -237,6 +254,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
                 "source": "Snarf1 D",
@@ -249,6 +267,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
                 "source": "Snarf2 C",
@@ -261,6 +280,7 @@
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
               },
               {
+                "risk": null,
                 "worst_ehxew": null,
                 "end_device": "NVIDIA ConnectX-7 NDR OSFP400",
                 "source": "Snarf2 D",
@@ -271,50 +291,6 @@
                 "to": "Terry2 (C)",
                 "slot": "21(Gen5 x16)",
                 "result": "report/AMD/Oahu/Margin/Margin%20Analysis%20Report%20x16.html"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "ddr-margin",
-        "title": "BBFV DDR Margin",
-        "tabs": [
-          {
-            "id": "ddr-margin-table",
-            "title": "BBFV DDR Margin",
-            "content": [
-              {
-                "dimm_type": 1,
-                "vendor": "Samsung",
-                "description": "6400 16G 1Rx8 RDIMM",
-                "pn": "SM37B81294",
-                "1dpc": "report/AMD/Oahu/Margin/MB1.html",
-                "2dpc": null
-              },
-              {
-                "dimm_type": 3,
-                "vendor": "Micron",
-                "description": "6400 32G 1Rx4 RDIMM",
-                "pn": "SM37B81295",
-                "1dpc": null,
-                "2dpc": "report/AMD/Oahu/Margin/MB1.html"
-              },
-              {
-                "dimm_type": 5,
-                "vendor": "Samsung",
-                "description": "6400 64G 2Rx8 RDIMM",
-                "pn": "SM37B81296",
-                "1dpc": "report/AMD/Oahu/Margin/MB1.html",
-                "2dpc": null
-              },
-              {
-                "dimm_type": 7,
-                "vendor": "Hynix",
-                "description": "6400 64G 2Rx8 RDIMM",
-                "pn": "SM37B81297",
-                "1dpc": null,
-                "2dpc": "report/AMD/Oahu/Margin/MB1.html"
               }
             ]
           }
