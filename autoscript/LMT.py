@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # ========= 使用者可修改區 =========
-input_folder = r"H:\Astera_retimer\Astera LMT compare RXC\Intel LMT+Kauai+Genoa+P5+Slot12\5 log csv"
+input_folder = r"H:\Astera_retimer\Astera LMT compare RXB\Intel LMT+Kauai+Genoa+P5+Slot12\run5 csv"
 ui_criteria = 10  # Timing Margin UI 標準
 volt_criteria = 25  # Voltage Margin mV 標準
 # =================================
@@ -35,8 +35,8 @@ def find_worst_cases(data):
 
 def generate_eye_diagram(ax, worst_cases, ui_criteria, volt_criteria):
     def plot_eye(case, color, label):
-        x = [-case['Margin Left (UI)'], 0, case['Margin Right (UI)'], 0, -case['Margin Left (UI)']]
-        y = [0, case['Margin Top (volt)'], 0, -case['Margin Bottom (volt)'], 0]
+        x = [case['Margin Left (UI)'], 0, case['Margin Right (UI)'], 0, case['Margin Left (UI)']]
+        y = [0, case['Margin Top (volt)'], 0, case['Margin Bottom (volt)'], 0]
         ax.plot(x, y, marker='o', label=label, color=color)
         ax.scatter(x, y, color=color)
 
