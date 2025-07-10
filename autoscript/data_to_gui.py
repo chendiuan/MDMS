@@ -272,7 +272,7 @@ def find_worst_cases(data):
     data['EH'] = data['Total Volt(volt)'] * 1000  # Convert EW to mV by multiplying by 1000
     data['EW'] = data['Total Phase(UI)']
     data['EH_EW'] = data['EH'] * data['EW']
-    data['EW_offset'] = data['Margin Left Offset'] + data[' Margin Right Offset']
+    data['EW_offset'] = data['Margin Left Offset'] + data['Margin Right Offset']
 
     # Find the worst values for the entire dataset
     worst_eh = data.loc[data['EH'].idxmin()]
@@ -306,25 +306,25 @@ def generate_eye_diagram(ax, worst_cases, offset_criteria, volt_criteria):
         },
         {
             'label': f"Loop {worst_eh['loop']} Lane {worst_eh['LanePCIeNo']} - Worst EH",
-            'x': [-worst_eh['Margin Left Offset'], 0, worst_eh[' Margin Right Offset'], 0, -worst_eh['Margin Left Offset']],
+            'x': [-worst_eh['Margin Left Offset'], 0, worst_eh['Margin Right Offset'], 0, -worst_eh['Margin Left Offset']],
             'y': [0, worst_eh['Margin Top (volt)'], 0, -worst_eh['Margin Bottom (volt)'], 0],
             'color': 'blue'
         },
         {
             'label': f"Loop {worst_ew['loop']} Lane {worst_ew['LanePCIeNo']} - Worst EW",
-            'x': [-worst_ew['Margin Left Offset'], 0, worst_ew[' Margin Right Offset'], 0, -worst_ew['Margin Left Offset']],
+            'x': [-worst_ew['Margin Left Offset'], 0, worst_ew['Margin Right Offset'], 0, -worst_ew['Margin Left Offset']],
             'y': [0, worst_ew['Margin Top (volt)'], 0, -worst_ew['Margin Bottom (volt)'], 0],
             'color': 'green'
         },
         {
             'label': f"Loop {worst_eh_ew['loop']} Lane {worst_eh_ew['LanePCIeNo']} - Worst EH*EW",
-            'x': [-worst_eh_ew['Margin Left Offset'], 0, worst_eh_ew[' Margin Right Offset'], 0, -worst_eh_ew['Margin Left Offset']],
+            'x': [-worst_eh_ew['Margin Left Offset'], 0, worst_eh_ew['Margin Right Offset'], 0, -worst_eh_ew['Margin Left Offset']],
             'y': [0, worst_eh_ew['Margin Top (volt)'], 0, -worst_eh_ew['Margin Bottom (volt)'], 0],
             'color': 'orange'
         },
         {
             'label': f"Loop {worst_ew_offset['loop']} Lane {worst_ew_offset['LanePCIeNo']} - Worst EW Offset",
-            'x': [-worst_ew_offset['Margin Left Offset'], 0, worst_ew_offset[' Margin Right Offset'], 0, -worst_ew_offset['Margin Left Offset']],
+            'x': [-worst_ew_offset['Margin Left Offset'], 0, worst_ew_offset['Margin Right Offset'], 0, -worst_ew_offset['Margin Left Offset']],
             'y': [0, worst_ew_offset['Margin Top (volt)'], 0, -worst_ew_offset['Margin Bottom (volt)'], 0],
             'color': 'purple'
         }
@@ -349,10 +349,10 @@ def generate_button():
     data = pd.read_csv(file_path)
 
     df_plot = data[
-        [' Bus', 'Device', 'Function', 'LanePCIeNo', 'Total Phase(UI)', 'Total Volt(volt)', 'Margin Top (volt)',
-         'Margin Bottom (volt)', 'Margin Left Offset', ' Margin Right Offset', 'LCBestPreset']].copy()
+        ['Bus', 'Device', 'Function', 'LanePCIeNo', 'Total Phase(UI)', 'Total Volt(volt)', 'Margin Top (volt)',
+         'Margin Bottom (volt)', 'Margin Left Offset', 'Margin Right Offset', 'LCBestPreset']].copy()
     df_plot['Margin Left Offset'] = df_plot['Margin Left Offset']
-    df_plot['Margin Right Offset'] = df_plot[' Margin Right Offset']
+    df_plot['Margin Right Offset'] = df_plot['Margin Right Offset']
     df_plot['Margin Top (volt)'] = df_plot['Margin Top (volt)'] * 1000  # Convert to mV
     df_plot['Margin Bottom (volt)'] = df_plot['Margin Bottom (volt)'] * 1000  # Convert to mV
     df_plot['Total Phase(UI)'] = df_plot['Total Phase(UI)']
@@ -360,7 +360,7 @@ def generate_button():
     df_plot['EH*EW'] = df_plot['Total Phase(UI)'] * df_plot['Total Volt(volt)']
     df_plot['LCBestPreset'] = df_plot['LCBestPreset']
     df_plot['Bus_Device_Function'] = df_plot.apply(
-        lambda row: f"{int(row[' Bus'])}:{int(row['Device'])}.{int(row['Function'])}", axis=1)
+        lambda row: f"{int(row['Bus'])}:{int(row['Device'])}.{int(row['Function'])}", axis=1)
 
     # Find worst cases for each margin
     worst_top_lane = df_plot.loc[df_plot['Margin Top (volt)'].idxmin()]
@@ -419,7 +419,7 @@ def generate_button():
     </tr>
     """
 
-    unique_info = data[[' Bus', 'Device', 'Function', 'BIOS']].drop_duplicates()
+    unique_info = data[['Bus', 'Device', 'Function', 'BIOS']].drop_duplicates()
 
     table_rows = ""
     charts_html = ""
@@ -436,7 +436,7 @@ def generate_button():
     for _, row in unique_info.iterrows():
         table_rows += f"""
         <tr>
-            <td>{int(row[' Bus'])}</td>
+            <td>{int(row['Bus'])}</td>
             <td>{int(row['Device'])}</td>
             <td>{int(row['Function'])}</td>
             <td>{row['BIOS']}</td>
