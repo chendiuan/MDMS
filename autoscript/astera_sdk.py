@@ -5,14 +5,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # ========= 使用者可修改區 =========
-input_folder = r"H:\Astera_retimer\Astera LMT compare RXB\Astera python SDK+Kauai+Genoa+P5+Slot12\1x5"
+input_folder = r"C:\Users\dchen52\OneDrive - Lenovo\Documents\Astera\Astera_retimer\Astera LMT compare RXB\Astera python SDK+Kauai+Genoa+P5+Slot12\1x5"
 ui_criteria = 10  # Timing Margin UI 標準
 volt_criteria = 25  # Voltage Margin mV 標準
 # =================================
 
 column_map = {
-    "Timing_neg_UI%": "Margin Left Offset",
-    "Timing_pos_UI%": "Margin Right Offset",
+    "Timing_neg_UI%": "Margin Left (UI)",
+    "Timing_pos_UI%": "Margin Right (UI)",
     "Timing_tot_UI%": "Total Phase(UI)",
     "Voltage_neg_mV": "Margin Bottom (volt)",
     "Voltage_pos_mV": "Margin Top (volt)",
@@ -23,24 +23,30 @@ def standardize_columns(df):
     return df.rename(columns=column_map)
 
 def find_worst_cases(data):
+    data['ML'] = data['Margin Left (UI)']
+    data['MR'] = data['Margin Right (UI)']
+    data['MT'] = data['Margin Top (volt)']
+    data['MB'] = data['Margin Bottom (volt)']
     data['EH'] = data['Total Volt(volt)']
     data['EW'] = data['Total Phase(UI)']
     data['EH_EW'] = data['EH'] * data['EW']
     return {
-        'Worst EH': data.loc[data['EH'].idxmin()],
-        'Worst EW': data.loc[data['EW'].idxmin()],
+        'Worst ML': data.loc[data['ML'].idxmin()],
+        'Worst MR': data.loc[data['MR'].idxmin()],
+        'Worst MT': data.loc[data['MT'].idxmin()],
+        'Worst MB': data.loc[data['MB'].idxmin()],
         'Worst EH*EW': data.loc[data['EH_EW'].idxmin()]
     }
 
 def generate_eye_diagram(ax, worst_cases, ui_criteria, volt_criteria):
     def plot_eye(case, color, label):
-        x = [-case['Margin Left Offset'], 0, case['Margin Right Offset'], 0, -case['Margin Left Offset']]
+        x = [-case['Margin Left (UI)'], 0, case['Margin Right (UI)'], 0, -case['Margin Left (UI)']]
         y = [0, case['Margin Top (volt)'], 0, -case['Margin Bottom (volt)'], 0]
         ax.plot(x, y, marker='o', label=label, color=color)
         ax.scatter(x, y, color=color)
 
     max_ui = max(
-        max(abs(case['Margin Left Offset']), abs(case['Margin Right Offset']))
+        max(abs(case['Margin Left (UI)']), abs(case['Margin Right (UI)']))
         for case in worst_cases.values()
     )
     max_volt = max(
@@ -60,8 +66,8 @@ def generate_eye_diagram(ax, worst_cases, ui_criteria, volt_criteria):
     ax.plot(x_crit, y_crit, color='red', linestyle='--', linewidth=2, label='Criteria Eye')
     ax.scatter(x_crit, y_crit, color='red')
 
-    colors = ['blue', 'green', 'orange', 'purple']
-    labels = ['Worst EH', 'Worst EW', 'Worst EH*EW']
+    colors = ['blue', 'green', 'orange', 'tomato', 'purple']
+    labels = ['Worst ML', 'Worst MR', 'Worst MT', 'Worst MB', 'Worst EH*EW']
     for key, color, label in zip(labels, colors, labels):
         plot_eye(worst_cases[key], color, f"{label} (Lane {worst_cases[key]['Lane']})")
 
@@ -173,6 +179,10 @@ def generate_html(data, eye_diagram_base64, ui_criteria, volt_criteria, output_f
                 background-color: #f0f0f0;
                 color: #333333;
             }}
+            .highlight-worst {{
+            color: red;
+            font-weight: bold;
+            }}
         </style>
     </head>
     <body>
@@ -185,10 +195,22 @@ def generate_html(data, eye_diagram_base64, ui_criteria, volt_criteria, output_f
                 <tr><th>Lane</th><th>EH*EW</th><th>Margin Top (mV)</th><th>Margin Bottom (mV)</th><th>Margin Left (UI)</th><th>Margin Right (UI)</th></tr>
     """
 
-    for case in summary.values():
-        html += f"<tr><td>{case['Lane']}</td><td>{case['EH_EW']:.1f}</td>"
-        html += f"<td>{case['Margin Top (volt)']:.1f}</td><td>{case['Margin Bottom (volt)']:.1f}</td>"
-        html += f"<td>{case['Margin Left Offset']}</td><td>{case['Margin Right Offset']}</td></tr>"
+    for key, case in summary.items():
+            # Determine which column to highlight based on the worst case type
+            highlight_eh_ew = key == 'Worst EH*EW'
+            highlight_mt = key == 'Worst MT'
+            highlight_mb = key == 'Worst MB'
+            highlight_ml = key == 'Worst ML'
+            highlight_mr = key == 'Worst MR'
+
+            # Construct the row with conditional highlighting
+            html += f"<tr><td>Lane {case['Lane']}</td>"
+            html += f"<td class='highlight-worst'>{case['EH_EW']:.1f}</td>" if highlight_eh_ew else f"<td>{case['EH_EW']:.1f}</td>"
+            html += f"<td class='highlight-worst'>{case['Margin Top (volt)']:.1f}</td>" if highlight_mt else f"<td>{case['Margin Top (volt)']:.1f}</td>"
+            html += f"<td class='highlight-worst'>{case['Margin Bottom (volt)']:.1f}</td>" if highlight_mb else f"<td>{case['Margin Bottom (volt)']:.1f}</td>"
+            html += f"<td class='highlight-worst'>{case['Margin Left (UI)']}</td>" if highlight_ml else f"<td>{case['Margin Left (UI)']}</td>"
+            html += f"<td class='highlight-worst'>{case['Margin Right (UI)']}</td>" if highlight_mr else f"<td>{case['Margin Right (UI)']}</td>"
+            html += "</tr>"
 
     html += f"""
             </table>
