@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator - Margin Data Management System</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/commons.css">
+    <link rel="stylesheet" href="../static/css/homepage.css">
+    <link rel="stylesheet" href="../static/css/sidebar.css">
+    <link rel="stylesheet" href="../static/css/tablist.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">🌓 Margin Data Management System</div>
+        <div class="header-right">
+            <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+            <button class="nav-button" onclick="toggleModal('about-modal')">About</button>
+        </div>
+    </div>
+    <div class="sidebar">
+        <aside class="sidebar">
+            <h2>Project List</h2>
+            <div id="projectList" class="project-list"></div>
+        </aside>
+        <nav>
+            <ul>
+                <li><a href="/" class="sidebar-link">About</a></li>
+                <li><a href="/generator" class="sidebar-link active">➡ Open Generator</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="section-title">Report Generator</div>
+        <div class="tabpanel">
+            <form id="generator-form" action="/generate" method="POST" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label for="script-select" class="block text-sm font-medium text-[var(--text-color)]">選擇 Script：</label>
+                    <select id="script-select" name="script" class="mt-1 block w-full py-2 px-3 border border-[var(--border-color)] bg-[var(--tab-active-bg)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] sm:text-sm">
+                        <option value="">請選擇一個 script</option>
+                        {% for script in scripts %}
+                        <option value="{{ script }}">{{ script }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="file-upload" class="block text-sm font-medium text-[var(--text-color)]">上傳檔案/資料夾：</label>
+                    <input type="file" id="file-upload" name="files" multiple webkitdirectory class="mt-1 block w-full py-2 px-3 border border-[var(--border-color)] bg-[var(--tab-active-bg)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] sm:text-sm">
+                </div>
+                <div class="mb-4">
+                    <label for="eye-height" class="block text-sm font-medium text-[var(--text-color)]">Eye Height (mV)：</label>
+                    <input type="number" id="eye-height" name="eye_height" step="0.1" class="mt-1 block w-full py-2 px-3 border border-[var(--border-color)] bg-[var(--tab-active-bg)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] sm:text-sm" placeholder="輸入 eye height (mV)">
+                </div>
+                <div class="mb-4">
+                    <label for="eye-width" class="block text-sm font-medium text-[var(--text-color)]">Eye Width (UI)：</label>
+                    <input type="number" id="eye-width" name="eye_width" step="0.1" class="mt-1 block w-full py-2 px-3 border border-[var(--border-color)] bg-[var(--tab-active-bg)] rounded-md shadow-sm focus:outline-none focus:ring-[var(--accent-color)] focus:border-[var(--accent-color)] sm:text-sm" placeholder="輸入 eye width (UI)">
+                </div>
+                <button type="submit" class="bg-[var(--accent-color)] text-[var(--link-hover)] py-2 px-4 rounded-md hover:bg-[color-mix(in srgb, var(--accent-color), #000 20%)]">執行 Generator</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="toggleModal('about-modal')">&times;</span>
+            <h2 class="modal-title">關於 Margin Data Management System</h2>
+            <p><strong>Owner：</strong> Dean Chen</p>
+            <p><strong>Version：</strong> 1.0.0</p>
+            <p><strong>Last Update：</strong> May 2025</p>
+            <p><strong>Contact：</strong> dchen52@lenovo.com</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('hidden');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDMS Dashboard</title>
+    <link rel="stylesheet" href="/static/css/commons.css">
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/homepage.css">
+    <link rel="stylesheet" href="/static/css/tablist.css">
+</head>
+<body>
+    <header class="header">
+    <div class="header-title">Margin Data Management System</div>
+    <div class="header-right">
+        <span class="date-time" id="currentDateTime"></span>
+        <button class="theme-toggle" id="themeToggle">🌓</button>
+        <button class="nav-button" id="aboutButton">About</button>
+    </div>
+    </header>
+
+    <div class="layout">
+    <aside class="sidebar">
+        <h2>Project List</h2>
+        <div id="projectList" class="project-list"></div>
+    </aside>
+
+    <main class="main-content">
+        <section class="configuration-section">
+        <div class="main-header">
+            <h1 id="projectTitle">System Configuration</h1>
+            <div class="controls">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search configurations...">
+                <i class="fas fa-search"></i>
+            </div>
+            </div>
+        </div>
+
+        <!-- Tab list and dynamic panels -->
+        <div class="tablist" role="tablist"></div>
+        <section id="configuration" class="configuration-section"></section>
+        </section>
+    </main>
+    </div>
+
+<!-- About Modal -->
+<div class="modal hidden" id="aboutModal">
+    <div class="modal-content">
+        <span class="modal-close" id="closeAboutModal">&times;</span>
+        <h2 class="modal-title">About Margin Data Management System</h2>
+        <ul>
+        <li><strong>Owner:</strong> Dean Chen</li>
+        <li><strong>Version:</strong> 1.0.0</li>
+        <li><strong>Last Update:</strong> May 2025</li>
+        <li><strong>Contact:</strong> dchen52@lenovo.com</li>
+        </ul>
+    </div>
+</div>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/configuration.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
